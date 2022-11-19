@@ -2,7 +2,8 @@ import React, { useState } from "react";
 import styled from "styled-components";
 import palette from "../styles/palette";
 import Link from "next/link";
-
+import useModal from "../hooks/useModal";
+import SignUpModal from "./auth/SignUpModal";
 const Container = styled.div`
   position: sticky;
   top: 0;
@@ -78,7 +79,7 @@ const Container = styled.div`
 `;
 
 const Header: React.FC = () => {
-  const [modalOpened, setModalOpended] = useState(false);
+  const { openModal, ModalPortal} = useModal()
 
   return (
     <Container>
@@ -91,28 +92,17 @@ const Header: React.FC = () => {
         <button
           type="button"
           className="header-sign-up-button"
-          onClick={() => {
-            setModalOpended(true);
-          }}
+          onClick={openModal}
         >
           회원가입
         </button>
         <button type="button" className="header-login-button">
           로그인
         </button>
-        {modalOpened && (
-          <div className="modal-wrapper">
-            <div
-              className="modal-background"
-              role="presentation"
-              onClick={() => {
-                setModalOpended(false);
-              }}
-            />
-            <div className="modal-contents" />
-          </div>
-        )}
       </div>
+      <ModalPortal>
+        <SignUpModal/>
+      </ModalPortal>
     </Container>
   );
 };

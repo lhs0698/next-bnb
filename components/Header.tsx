@@ -98,7 +98,7 @@ const Header: React.FC = () => {
           회원가입
         </button>
         <button type="button" className="header-login-button">
-          로그인 Test
+          로그인
         </button>
         {modalOpened && (
           <div className="modal-wrapper">

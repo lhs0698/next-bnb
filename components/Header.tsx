@@ -4,6 +4,9 @@ import palette from "../styles/palette";
 import Link from "next/link";
 import useModal from "../hooks/useModal";
 import SignUpModal from "./auth/SignUpModal";
+import AirbnbLogoIcon from "../public/static/svg/logo/logo.svg"
+import AirbnbLogoTextIcon from "../public/static/svg/logo/logo_text.svg"
+
 const Container = styled.div`
   position: sticky;
   top: 0;
@@ -85,7 +88,8 @@ const Header: React.FC = () => {
     <Container>
       <Link legacyBehavior href="/">
         <a className="header-logo-wrapper" id="link">
-          airbnb
+          <AirbnbLogoIcon classname="header-logo-wrapper" />
+          <AirbnbLogoTextIcon/>
         </a>
       </Link>
       <div className="header-auth-button">

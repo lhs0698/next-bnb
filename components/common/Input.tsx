@@ -37,9 +37,10 @@ interface IProps extends React.InputHTMLAttributes<HTMLInputElement> {
   icon?: JSX.Element;
 }
 
-// React.InputHTMLAttributes<HTMLInputElement>는 input 태그가 가지는 속성들에 대한 타입. extendsfmf 사용하여 IProps는 inpu가 가지는 속성을 확장하여 사용
-// icon?: JSX.Element는 타입이 JSX 엘리먼트인 icon 값을 받지 않을 수도 undefined일 수도 있다는 것을 의미한다.
-// icon? JSX.Element == icon? JSX.Element || undefinded;
+//* React.InputHTMLAttributes<HTMLInputElement>는 input 태그가 가지는 속성들에 대한 타입. extendsfmf 사용하여 IProps는 inpu가 가지는 속성을 확장하여 사용
+//* extends를 사용하여 IProps는 input 태그가 가지는 속성을 확장하여 사용하게 된다.
+//* icon?: JSX.Element는 타입이 JSX 엘리먼트인 icon 값을 받지 않을 수도 undefined일 수도 있다는 것을 의미한다.
+//* icon? JSX.Element == icon? JSX.Element || undefinded;
 
 
 const Input: React.FC<IProps> = ({ icon, ...props }) => {

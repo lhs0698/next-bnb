@@ -9,6 +9,10 @@ import CloseEyeIcon from "../../public/static/svg/auth/closed_eye.svg";
 import Input from "../common/Input";
 import palette from "../../styles/palette";
 
+import Selector from "../common/Selector";
+import Button from "../common/Button";
+import { monthList, dayList, yearList } from "../../lib/staticData";
+
 const Container = styled.form`
   width: 568px;
   /* height: 614px; */
@@ -45,8 +49,41 @@ const Container = styled.form`
   }
   .sign-up-password-input-wrapper {
     svg {
-        cursor: pointer;
+      cursor: pointer;
     }
+  }
+  .sign-up-birthdat-label {
+    font-size: 16px;
+    font-weight: 600;
+    margin-top: 16px;
+    margin-bottom: 8px;
+  }
+
+  .sign-up-modal-birthday-info {
+    margin-bottom: 16px;
+    color: ${palette.charcoal};
+  }
+
+  .sign-up-modal-birthday-selectors {
+    display: flex;
+    margin-bottom: 24px;
+    .sign-up-modal-birthday-month-selector {
+      margin-right: 16px;
+      flex-grow: 1;
+    }
+    .sign-up-modal-birthday-day-selector {
+      margin-right: 16px;
+      width: 25%;
+    }
+    .sign-up-modal-birthday-year-selector {
+      width: 33.333%;
+    }
+  }
+
+  .sign-up-modal-submit-button-wrapper {
+    margin-bottom: 16px;
+    padding-bottom: 16px;
+    border-bottom: 1px solid ${palette.gray_eb};
   }
 `;
 
@@ -80,11 +117,10 @@ const SignUpModal: React.FC = () => {
   //* 비밀번호 숨김 토글하기
   //* Q&A
   const [hidePassword, setHidePassword] = useState(true);
-  
+
   const toggleHidePassword = () => {
     setHidePassword(!hidePassword);
   };
-
 
   //* input 태그에 넣은 속성 중 특별한 값 = name = "email", type = "password"
   //* 앞의 값들을 사용하면 브라우저에서 이름과 비밀번호를 저장할 수 있고, 다음에 불러 올 수 있도록 제공한다. type = "password"를 사용하면 값이 *로 대체되어 나온다.
@@ -124,15 +160,46 @@ const SignUpModal: React.FC = () => {
           type={hidePassword ? "password" : "text"} // ?
           icon={
             hidePassword ? (
-                <CloseEyeIcon onClick={toggleHidePassword}/>
+              <CloseEyeIcon onClick={toggleHidePassword} />
             ) : (
-                <OpenedEyeIcon onClick={toggleHidePassword}/>
+              <OpenedEyeIcon onClick={toggleHidePassword} />
             )
           }
           //* 비밀번호 보이게 하기
           value={password}
           onChange={onChangePassword}
         />
+      </div>
+      <p className="sign-up-birthdat-label">생일</p>
+      <p className="sign-up-modal-birthday-info">
+        만 18세 이상의 성인만 회원으로 가입할 수 있습니다. 생일은 다른
+        에어비앤비 이용자에게 공개되지 않습니다.
+      </p>
+      <div className="sign-up-modal-birthday-selectors">
+        <div className="sign-up-modal-birthday-month-selector">
+          <Selector
+            options={monthList}
+            // disabledOptions={["월"]}
+            defaultValue="월"
+          />
+        </div>
+        <div className="sign-up-modal-birthday-day-selector">
+          <Selector
+            options={dayList}
+            // disabledOptions={["일"]}
+            defaultValue="일"
+          />
+        </div>
+        <div className="sign-up-modal-birthday-year-selector">
+          <Selector
+            options={yearList}
+            // disabledOptions={["년"]}
+            defaultValue="년"
+          />
+        </div>
+      </div>
+      <div className="sign-up-modal-submit-button-wrapper">
+        <Button type="submit">가입하기</Button>
       </div>
     </Container>
   );

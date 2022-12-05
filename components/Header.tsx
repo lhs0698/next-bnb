@@ -88,7 +88,7 @@ const Header: React.FC = () => {
     <Container>
       <Link legacyBehavior href="/">
         <a className="header-logo-wrapper" id="link">
-          <AirbnbLogoIcon classname="header-logo-wrapper" />
+          <AirbnbLogoIcon className="header-logo-wrapper" />
           <AirbnbLogoTextIcon/>
         </a>
       </Link>

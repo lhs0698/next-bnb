@@ -13,6 +13,8 @@ import Selector from "../common/Selector";
 import Button from "../common/Button";
 import { monthList, dayList, yearList } from "../../lib/staticData";
 
+import { signupAPI } from "../../lib/api/auth";
+
 const Container = styled.form`
   width: 568px;
   /* height: 614px; */
@@ -94,13 +96,15 @@ const SignUpModal: React.FC = () => {
   const [lastname, setLastname] = useState("");
   const [firstname, setFirstname] = useState("");
   const [password, setPassword] = useState("");
+  const [birthYear, setBirthYear] = useState<string | undefined>();
+  const [birthDay, setBirthDay] = useState<string | undefined>();
+  const [birthMonth, setBirthMonth] = useState<string | undefined>();
   // useState를 사용해서 input 컴포넌트가 값을 받고 변경할 수 있도록 한다.
 
   //* 이메일 주소 변경 시
   const onChangeEmail = (event: React.ChangeEvent<HTMLInputElement>) => {
     setEmail(event.target.value);
   };
-
   //* 이름 변경 시
   const onChangeLastname = (event: React.ChangeEvent<HTMLInputElement>) => {
     setLastname(event.target.value);
@@ -113,6 +117,19 @@ const SignUpModal: React.FC = () => {
   const onChangePassword = (event: React.ChangeEvent<HTMLInputElement>) => {
     setPassword(event.target.value);
   };
+  //* 생년월일 월 변경 시
+  const onChangeBirthMonth = (event: React.ChangeEvent<HTMLSelectElement>) => {
+    setBirthMonth(event.target.value);
+  }
+  //* 생년월일 일 변경 시 
+  const onChangeBirthDay = (event: React.ChangeEvent<HTMLSelectElement>) => {
+    setBirthDay(event.target.value);
+  }
+  //* 생년월일 년 변경 시
+  const onChangeBirthYear = (event: React.ChangeEvent<HTMLSelectElement>) => {
+    setBirthYear(event.target.value);
+  }  
+
 
   //* 비밀번호 숨김 토글하기
   //* Q&A
@@ -125,8 +142,30 @@ const SignUpModal: React.FC = () => {
   //* input 태그에 넣은 속성 중 특별한 값 = name = "email", type = "password"
   //* 앞의 값들을 사용하면 브라우저에서 이름과 비밀번호를 저장할 수 있고, 다음에 불러 올 수 있도록 제공한다. type = "password"를 사용하면 값이 *로 대체되어 나온다.
 
+  const onSubmitSignUp = async (event: React.MouseEvent<HTMLFormElement>) => {
+    event.preventDefault();
+
+    try {
+      const signUpBody = {
+        email,
+        lastname,
+        firstname,
+        password,
+        // birthday: new Date(
+        //   `${birthYear}-${birthMonth!.replace("월","")}-${birthDay}`
+        // ).toISOString(),
+        birthday: "2022-12-25"
+      }
+      const { data } = await signupAPI(signUpBody);
+      console.log(data)
+    } catch(error) {
+      console.log(error)
+    }
+  }
+
+
   return (
-    <Container>
+    <Container onSubmit={onSubmitSignUp}>
       <CloseXIcon className="modal-close-x-icon" />
       <div className="input-wrapper">
         <Input
@@ -181,6 +220,8 @@ const SignUpModal: React.FC = () => {
             options={monthList}
             // disabledOptions={["월"]}
             defaultValue="월"
+            value={birthMonth}
+            onChange={onChangeBirthMonth}
           />
         </div>
         <div className="sign-up-modal-birthday-day-selector">
@@ -188,6 +229,8 @@ const SignUpModal: React.FC = () => {
             options={dayList}
             // disabledOptions={["일"]}
             defaultValue="일"
+            value={birthMonth}
+            onChange={onChangeBirthDay}
           />
         </div>
         <div className="sign-up-modal-birthday-year-selector">
@@ -195,6 +238,8 @@ const SignUpModal: React.FC = () => {
             options={yearList}
             // disabledOptions={["년"]}
             defaultValue="년"
+            value={birthMonth}
+            onChange={onChangeBirthYear}
           />
         </div>
       </div>
